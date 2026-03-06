@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Placed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+            background-color: #f8f8f8;
+        }
+
+        .top-strip {
+            background-color: black;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .back-button {
+            font-size: 28px;
+            padding: 12px 18px;
+            cursor: pointer;
+            background-color: white;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: green;
+            margin: 20px 0;
+        }
+
+        .invoice-label {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .details {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            color: black;
+        }
+
+        .details p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .bottom-image {
+            display: block;
+            margin: 30px auto 0;
+            max-width: 50%;
+            height: 6cm;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-strip">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo">
+        </div>
+    </div>
+
+    <div class="back-button" onclick="history.back()">←</div>
+
+    <div class="content">
+        <div class="title">Order Placed</div>
+        <div class="invoice-label">Invoice:</div>
+        <div class="details">
+            <p><strong>Order ID:</strong> {{ order_id }}</p>
+            <p><strong>Bill Amount:</strong> ₹ {{ "%.2f"|format(bill_amount) }}/-</p>
+            <p><strong>Delivery Date:</strong> {{ delivery_date }}</p>
+            <p><strong>Payment Method [Fixed]:</strong> Cash On Delivery</p>
+        </div>
+
+        <img class="bottom-image" src="{{ url_for('static', filename=image_name) }}" alt="Confirmation Image">
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Prevent caching -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <script>
+    // Prevent returning to logout or sensitive pages using back
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", function () {
+      // Redirect back to this home page if back is pressed
+      window.location.replace("{{ url_for('home') }}");
+    });
+  </script>
+</head>
+<body>
+  <div class="overlay">
+    <header>
+      <img src="static/logo.jpeg" alt="Logo" class="logo">
+      <p>Reinvent The Unique</p>
+      <p>We are a sustainable organization committed to making a difference.</p>
+      <p>We are inspired and driven by the belief that small acts of kindness can create a big impact.</p>
+      <p>Thank you for choosing to donate and thrift through our platform — your generosity truly matters.</p>
+      <p>Enjoy thrifting, and thank you for being part of this mission.</p>
+      <p>With gratitude,</p>
+      <p>– The Team</p>
+    </header>
+    <main class="content">
+      <h1>Welcome!</h1>
+      <p>Already have an account? - <span class="highlight">Login</span></p>
+      <p>Create a new account? - <span class="highlight">Sign up</span></p>
+      <div class="buttons">
+        <a href="{{ url_for('login_page') }}" class="btn">Login</a>
+        <a href="{{ url_for('signin') }}" class="btn">Sign In</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

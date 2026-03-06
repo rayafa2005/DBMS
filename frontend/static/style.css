@@ -1,0 +1,147 @@
+/* Set the full background image with a blue tint */
+body {
+    margin: 0;
+    padding: 0;
+    background: url('background.png') repeat center center fixed;
+    background-size: fill;
+    font-family: 'Times New Roman', serif;
+    position: relative;
+    height: 100vh;
+  }
+  
+  /* Add a semi-transparent blue overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(126, 126, 215, 0.5); /* dark blue with 50% opacity */
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* centers content vertically */
+    z-index: 9999; /* ensure it appears above other elements */
+}
+  
+  /* Logo positioning */
+  .logo {
+    margin-top: 50px;
+    height: 100px;
+  }
+  
+  /* Center the content */
+  .content {
+    margin-top: 5px;
+  }
+  
+  h1 {
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  p {
+    font-size: 22px;
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .highlight {
+    font-weight: bold;
+  }
+  
+  /* Buttons */
+  .buttons {
+    margin-top: 30px;
+  }
+  
+  .btn {
+    display: inline-block;
+    background-color: #87cefa; /* light blue */
+    color: white;
+    padding: 12px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 50px; /* sleeping oval shape */
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #87cefa; /* slightly darker blue on hover */
+  }
+  
+  /* LOGIN PAGE STYLES */
+.login-body {
+  margin: 0;
+  padding: 0;
+  background: url('background.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Times New Roman', serif;
+  height: 100vh;
+}
+
+.login-overlay {
+  background-color: rgba(126, 126, 215, 0.5); /* #6666aa80 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.login-box h2 {
+  text-align: center;
+  color: rgb(52, 52, 255);
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.login-box label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 16px;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #479de3;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #378ccc;
+}

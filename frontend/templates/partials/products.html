@@ -1,0 +1,36 @@
+
+   <!-- <div class="welcome-message" style="margin-bottom: 20px;">
+        <h2 style="font-family: 'Times New Roman', serif; font-weight: bold;">
+            Welcome {{ session['user_name'] }}
+        </h2>
+    </div>
+-->
+<!--<div class="products" id="product-container">
+    {% for product in products %}
+    <div class="product">
+        <a href="{{ url_for('index.view_product', product_id=product.id) }}">
+            <img src="{{ url_for('static', filename='product_images/' ~ product.image) }}" alt="{{ product.name }}">
+        </a>
+        <div class="product-info">
+            <div class="product-name" style="font-weight: bold; font-family: Arial, sans-serif;">{{ product.name }}</div>
+            <div class="product-price" style="font-family: Arial, sans-serif;">Rs. {{ product.price }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+-->
+
+
+  <div class="products" id="product-container">
+      {% for product in products %}
+      <div class="product" style="border-bottom: 1px solid lightgray; width: 100%;">
+          <a href="{{ url_for('index.view_product', product_id=product.id) }}">
+              <img src="{{ url_for('static', filename='product_images/' ~ product.image) }}" alt="{{ product.name }}">
+          </a>
+          <div class="product-info">
+              <div class="product-name" style="font-weight: bold; font-family: Arial, sans-serif;">{{ product.name }}</div>
+              <div class="product-price" style="font-family: Arial, sans-serif;">Rs. {{ product.price }}</div>
+          </div>
+      </div>
+      {% endfor %}
+  </div>

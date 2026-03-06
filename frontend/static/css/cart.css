@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-bottom: 120px;
+    overflow-x: hidden;
+}
+
+.top-strip {
+    background-color: black;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.back-button {
+    font-size: 30px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.cart-heading {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    color: black;
+    margin: 10px 30px;
+}
+
+.empty-cart {
+    text-align: center;
+    color: gray;
+    font-style:italic;
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+}
+
+.empty-cart img {
+    max-width: 8cm;
+    height:auto;
+    margin-bottom: 20px;
+}
+
+.cart-container {
+    padding: 10px 30px;
+}
+
+.cart-row {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid lightgray;
+    transition: all 0.5s ease;
+}
+
+.product-image {
+    width: 6cm;
+    height: 6cm;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.product-details {
+    flex: 1;
+    padding-left: 10px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.product-price {
+    color: black;
+}
+
+.og-price {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.qty-select {
+    margin-top: 5px;
+}
+
+.remove-btn {
+    background-color: rgb(252, 93, 93);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-left: 50px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.billing-section {
+    margin: 20px 30px;
+    color: black;
+    font-family: Arial;
+}
+
+.checkout-btn {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    background-color: rgb(252, 93, 93);
+    color: white;
+    text-decoration: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+}

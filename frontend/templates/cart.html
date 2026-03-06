@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user_name }}'s Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <script>
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+    });
+    </script>
+</head>
+<body>
+    <div class="top-strip">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo">
+        </div>
+    </div>
+
+    <div class="back-button" onclick="history.back()">←</div>
+
+    <h2 class="cart-heading">{{ user_name }}'s cart</h2>
+
+    {% if cart_items|length == 0 %}
+        <div class="empty-cart">
+            <img src="{{ url_for('static', filename='empty_cart.png') }}" alt="Empty Cart">
+            <p>Cart is Empty.</p>
+        </div>
+    {% else %}
+        <div class="cart-container">
+            {% for item in cart_items %}
+                <div class="cart-row" data-product-id="{{ item.id }}">
+                   <a href="{{ url_for('index.view_product', product_id=item.id) }}">
+                        <img class="product-image" src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="{{ item.name }}">
+                    </a>
+                    <div class="product-details">
+                        <p class="product-name">{{ item.name }}</p>
+                        <p class="product-price">₹ {{ item.price }}/- <span class="og-price">₹ {{ item.og_price }}/-</span></p>
+                        <label>Qty:
+                            <select class="qty-select" data-product-id="{{ item.id }}">
+                                {% for i in range(1, item.max_qty + item.quantity + 1) %}
+                                    <option value="{{ i }}" {% if i == item.quantity %}selected{% endif %}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    </div>
+                    <button class="remove-btn" data-product-id="{{ item.id }}">Remove</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="billing-section">
+            <p><strong>Billing:</strong></p>
+            {% for item in cart_items %}
+                <p>{{ item.name }}: ₹ {{ "%.2f"|format(item.price * item.quantity) }}/-</p>
+            {% endfor %}
+            <p>Total Amount: ₹ {{ "%.2f"|format(total) }}/-</p>
+            <p>Delivery Charges: ₹ 50/-</p>
+            <p><strong>Bill Amount: ₹ {{ "%.2f"|format(total + 50) }}/-</strong></p>
+            <p>Payment option [Fixed]: Cash On Delivery</p>
+            <a href="{{ url_for('cart_bp.checkout') }}" class="checkout-btn">Checkout</a>
+        </div>        
+    {% endif %}
+
+    <script>
+        document.querySelectorAll('.remove-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const row = this.closest('.cart-row');
+                const productId = this.dataset.productId;
+
+                row.style.transform = 'translateX(-100%)';
+                row.style.opacity = '0';
+
+                setTimeout(() => {
+                    row.remove();
+                    fetch(`/cart/remove/${productId}`, { method: 'POST' })
+                        .then(() => location.reload());
+                }, 500);
+            });
+        });
+
+        document.querySelectorAll('.qty-select').forEach(select => {
+            select.addEventListener('change', function () {
+                const productId = this.dataset.productId;
+                const qty = this.value;
+                fetch(`/cart/update_qty/${productId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ qty: qty })
+                }).then(() => location.reload());
+            });
+        });
+    </script>
+</body>
+</html>

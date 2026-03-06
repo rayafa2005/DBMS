@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    overflow-y: scroll;
+}
+
+.top-strip {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    position: relative;
+    width: 100%;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo img {
+    height: 40px;
+    object-fit: contain;
+}
+
+.profile-icon {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+    background: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+}
+
+.back-button {
+    margin: 1rem 0 0 1rem;
+    font-size: 2rem;
+    margin: black;
+}
+
+.back-button a {
+    text-decoration: none;
+    color: black;
+}
+
+.product-container {
+    padding: 1rem 40px;
+    text-align: left;
+}
+
+.product-image {
+    width: calc(100% - 20px); /* slightly smaller */
+    max-width: 8cm;
+    display: block;
+    margin: 1rem auto;
+}
+
+.product-info h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    color: black;
+    margin-top: 1rem;
+    font-size: 2rem;
+}
+
+.price {
+    color: black;
+    font-size: 1.2rem;
+    margin-top: 0.3rem;
+}
+
+.og-price {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.buttons button {
+    padding: 0.8rem 1.6rem;
+    font-size: 1.1rem;
+    border: none;
+    background-color: #000000;
+    color: white;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.buttons .sold-out {
+    background-color: rgb(118, 117, 117);
+}
+
+.description-heading {
+    margin-top: 2.5rem;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: black;
+}
+
+.description {
+    color: black;
+    margin-bottom: 8rem; /* gives 8 lines of gap */
+    line-height: 1.6;
+}
+
+.qty-dropdown {
+    font-size: 1rem;
+    margin-left: 8px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}

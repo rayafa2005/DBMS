@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Log In</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+  <div class="login-overlay">
+    <div class="login-box">
+      <h2>Log In</h2>
+
+      <!-- Show error message if redirected from signin -->
+      {% if message == 'exists' %}
+        <p style="color: red; font-weight: bold;">⚠️ Account already exists. Please log in.</p>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for('login_page') }}">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+    
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    
+        <input type="checkbox" onclick="togglePassword()"> Show Password
+        <br><br>
+    
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById("password");
+      pwd.type = pwd.type === "password" ? "text" : "password";
+    }
+  </script>
+</body>
+</html>

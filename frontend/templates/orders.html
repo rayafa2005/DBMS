@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ user_name }}'s Orders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/orders.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <div class="top-strip">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo" />
+        </div>
+    </div>
+    <div class="back-button" onclick="history.back()">←</div>
+
+    <div class="orders-title">{{ user_name }}'s Orders</div>
+
+    {% if not current_orders and not previous_orders %}
+        <div class="no-orders-full">
+            <img src="{{ url_for('static', filename='no_orders_yet.png') }}" alt="No Orders Yet" />
+            <p>You have not placed any orders yet.</p>
+        </div>
+    {% else %}
+        {% if current_orders %}
+            <div class="section-header">Current Orders</div>
+            {% for order in current_orders %}
+                <div class="order-row">
+                    <div class="order-info">
+                        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                        <p><strong>Bill Amount:</strong> ₹ {{ "%.2f"|format(order.total) }}/-</p>
+                        <p><strong>Delivery Date:</strong> {{ order.delivery_date }}</p>
+                        <p><strong>Payment Method [Fixed]:</strong> Cash On Delivery</p>
+                    </div>
+                    <div class="product-images">
+                        {% for item in order['items'] %}
+                            <a href="{{ url_for('view_prd.view_product', product_id=item.id) }}">
+                                <img src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="Product Image" />
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-orders-section">
+                <img src="{{ url_for('static', filename='no_current_orders.png') }}" alt="No Current Orders" />
+                <p>No current orders found.</p>
+            </div>
+        {% endif %}
+
+        {% if previous_orders %}
+            <div class="section-header">Previous Orders</div>
+            {% for order in previous_orders %}
+                <div class="order-row">
+                    <div class="order-info">
+                        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                        <p><strong>Bill Amount:</strong> ₹ {{ "%.2f"|format(order.total) }}/-</p>
+                        <p><strong>Delivery Date:</strong> {{ order.delivery_date }}</p>
+                        <p><strong>Payment Method [Fixed]:</strong> Cash On Delivery</p>
+                    </div>
+                    <div class="product-images">
+                        {% for item in order['items'] %}
+                            <a href="{{ url_for('view_prd.view_product', product_id=item.id) }}">
+                                <img src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="Product Image" />
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-orders-section">
+                <img src="{{ url_for('static', filename='no_current_orders.png') }}" alt="No Previous Orders" />
+                <p>No previous orders found.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

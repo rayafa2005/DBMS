@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Display</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+    <!-- Top Black Strip -->
+    <div class="top-strip">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo">
+        </div>
+        <a href="{{ url_for('profile_bp.profile') }}" class="profile-button">👤</a>
+    </div>
+
+    <div class="main-container">
+        <!-- Sidebar Filter -->
+        <div class="sidebar">
+            <h2>Filter By</h2>
+
+            <div class="filter">
+                <button class="filter-btn" onclick="togglePopup('price-popup')">Price</button>
+                <div id="price-popup" class="popup">
+                    <div onclick="applyFilter('price', '100-500')">Rs. 100-500</div>
+                    <div onclick="applyFilter('price', '500-1000')">Rs. 500-1000</div>
+                </div>
+            </div>
+
+            <div class="filter">
+                <button class="filter-btn" onclick="togglePopup('category-popup')">Category</button>
+                <div id="category-popup" class="popup">
+                    <div onclick="applyFilter('category', 'dress')">Dress</div>
+                    <div onclick="applyFilter('category', 'shirt')">Shirt</div>
+                    <div onclick="applyFilter('category', 'pant')">Pant</div>
+                    <div onclick="applyFilter('category', 'skirt')">Skirt</div>
+                    <div onclick="applyFilter('category', 'jacket')">Jacket</div>
+                    <div onclick="applyFilter('category', 'other')">Other</div>
+                </div>
+            </div>
+
+            <div class="filter">
+                <button class="filter-btn" onclick="togglePopup('condition-popup')">Condition</button>
+                <div id="condition-popup" class="popup">
+                    <div onclick="applyFilter('condition', 'New')">New</div>
+                    <div onclick="applyFilter('condition', 'Like New')">Like New</div>
+                    <div onclick="applyFilter('condition', 'Used')">Used</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <button onclick="removeFilters()">Remove Filters</button>
+            </div>
+        </div>
+        
+  <!-- Products Section -->
+<div class="products-section" style="flex: 1; padding: 20px; overflow-y: auto;">
+  <div class="welcome-message" style="margin-bottom: 20px;">
+      <h2 style="font-family: 'Times New Roman', serif; font-weight: bold;">
+          Welcome {{ session['user_name'] }}
+      </h2>
+  </div>
+
+  <div id="product-container">
+      {% include 'partials/products.html' %}
+  </div>
+
+</div>
+
+    <script>
+        function togglePopup(id) {
+            document.querySelectorAll('.popup').forEach(popup => {
+                if (popup.id !== id) popup.style.display = 'none';
+            });
+            const popup = document.getElementById(id);
+            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function applyFilter(type, value) {
+            fetch(`/index/filter?${type}=${value}`)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("product-container").innerHTML = html;
+                });
+            document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
+        }
+
+        function removeFilters() {
+            fetch('/index/')
+                .then(res => res.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newContent = doc.querySelector('#product-container').innerHTML;
+                    document.getElementById("product-container").innerHTML = newContent;
+                });
+        }
+
+        document.addEventListener("click", function (e) {
+            if (!e.target.matches(".filter-btn")) {
+                document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+}
+
+.top-strip {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  position: relative;
+  width: 100%;
+}
+
+.logo img {
+  height: 40px; /* adjust as needed */
+  object-fit: contain;
+  box-align: middle;
+}
+
+.profile-button {
+  position: absolute;
+  right: 20px;
+  background: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+}
+
+.main-container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+.sidebar {
+  width: 16.66%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  position: sticky;
+  top: 60px;
+  height: 100%;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+}
+
+.popup {
+  display: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.popup div:hover {
+  background-color: #eee;
+}
+
+/*.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  justify-items: top;
+  align-items: top;
+}*/
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+
+.product {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  /*width: 100%;*/  /* Ensures the product takes the full width of the grid column */
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+}
+
+.product img {
+  width: 100%;
+  height: 7cm;
+  cursor: pointer;
+}
+
+.product-info {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.product-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.product-price {
+  color: #333;
+}
+
+/* Responsive tweaks */
+@media (max-width: 789px) {
+  .main-container {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 100%;
+      height: auto;
+      position: static;
+  }
+
+  .products {
+      grid-template-columns: 1fr;
+      border-left: none;
+  }
+}

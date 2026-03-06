@@ -1,0 +1,249 @@
+/* --- Layout and Global Styles --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #f8f8f8;
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* --- Top Strip and Back Button --- */
+.top-strip {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    position: relative;
+}
+
+.logo img {
+    height: 40px;
+    object-fit: contain;
+}
+
+
+.back-button {
+    font-size: 24px;
+    margin: 15px;
+    cursor: pointer;
+}
+
+/* --- Donate Title --- */
+.donate-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* --- Upload Section --- */
+.upload-section {
+    margin: 20px;
+    overflow-x: auto;
+    position: relative;
+}
+
+.scroll-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.6);
+    color: black;
+    font-size: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.scroll-arrow.left {
+    left: 0;
+}
+
+.scroll-arrow.right {
+    right: 0;
+}
+
+.image-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 40px;
+    scroll-behavior: smooth;
+}
+
+/* Upload Box */
+.upload-box {
+    width: 2cm;
+    height: 2cm;
+    background-color: #d3d3d3;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    cursor: pointer;
+    position: relative;
+}
+
+.plus-line {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Uploaded Image */
+.uploaded-image {
+    height: 2cm;
+    width: 2cm;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #aaa;
+}
+
+/* --- Form Styles --- */
+form {
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Terms checkbox */
+.terms {
+    font-size: 14px;
+    color: #555;
+}
+
+.terms input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.blue-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    width: 90%;
+    max-width: 500px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 999;
+}
+
+.popup-content p {
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.popup-content strong {
+    display: block;
+    margin-top: 10px;
+}
+
+/* Donate Button */
+.donate-button {
+    display: block;
+    background-color: #e53935;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    width: 60%;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.donate-button:hover {
+    background-color: #c62828;
+}
+
+/* --- Thank You Section --- */
+.thank-you {
+    text-align: center;
+    padding: 20px;
+}
+
+.thank-you img {
+    width: 180px;
+    margin-top: 10px;
+}
+
+.thank-message {
+    color: gray;
+    font-style: italic;
+    font-size: 16px;
+    margin: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    .donate-title {
+        font-size: 20px;
+    }
+
+    .donate-button {
+        width: 90%;
+        font-size: 16px;
+    }
+
+    .uploaded-image, .upload-box {
+        width: 1.8cm;
+        height: 1.8cm;
+    }
+}

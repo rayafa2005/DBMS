@@ -1,0 +1,57 @@
+<!-- frontend/templates/pages/signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="background-image">
+  <div class="login-body">
+    <div class="login-overlay">
+    <div class="login-box">
+      <h2 class="form-heading">Sign In</h2>
+      <form method="POST" action="{{ url_for('signin') }}">
+        <label for="name">Name:</label>
+        <input type="text" name="name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required />
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" maxlength="15" required />
+
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" name="confirm_password" id="confirm_password" required />
+        <p id="password-error" class="error-msg"></p>
+
+        <label for="address">Address:</label>
+        <textarea name="address" rows="2" required></textarea>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" name="phone" pattern="\d{10}" title="Enter 10-digit phone number" required />
+
+        <small><i>⚠️ Please note that the shipping is done ONLY in India</i></small><br><br>
+
+        <button type="submit" class="login-btn">Sign In</button>
+      </form>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    function validateSignupForm() {
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm_password').value;
+      const error = document.getElementById('password-error');
+
+      if (password !== confirm) {
+        error.textContent = 'Re-enter password';
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

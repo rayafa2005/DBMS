@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    <div class="top-strip">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo">
+        </div>
+    </div>
+
+    <div class="back-button" onclick="history.back()">
+        ←
+    </div>
+
+    <div class="profile-container">
+        <h2>{{ user_name }}'s Profile</h2>
+
+        <div class="option" onclick="toggleEdit()">Edit Profile</div>
+        <div id="edit-form" class="form-container" style="display:none;">
+            <input type="text" id="name" placeholder="Name" value="{{ user_data.name }}">
+            <input type="email" id="email" placeholder="Email" value="{{ user_data.email }}">
+            <input type="text" id="phone" placeholder="Phone" value="{{ user_data.phone }}">
+            <textarea id="address" placeholder="Address">{{ user_data.address }}</textarea>
+            <button id="save-btn" onclick="saveChanges()">Save Changes</button>
+
+            <div class="option" onclick="togglePassword()">Change Password</div>
+            <div id="password-form" style="display:none;">
+                <input type="password" id="current-password" placeholder="Current Password">
+                <input type="password" id="new-password" placeholder="New Password">
+                <input type="password" id="confirm-password" placeholder="Confirm Password">
+                <button id="password-btn" onclick="savePassword()">Save Password</button>
+            </div>
+        </div>
+
+        <div class="option" onclick="location.href='{{ url_for('cart_bp.cart') }}'">Cart</div>
+        <div class="option" onclick="location.href='{{ url_for('wishlist.wishlist') }}'">Wishlist</div>
+        <div class="option" onclick="location.href='/orders'">Orders</div>
+        <div class="option" onclick="location.href='/donate'">Donate a product?</div>
+        <div class="option" onclick="location.href='/logout.html'">Logout</div>
+    </div>
+
+    <script>
+        function toggleEdit() {
+            const form = document.getElementById('edit-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function togglePassword() {
+            const form = document.getElementById('password-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function saveChanges() {
+            const btn = document.getElementById('save-btn');
+            btn.textContent = 'Saving...';
+
+            fetch('/profile/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.textContent = data.success ? 'Saved' : 'Not Saved';
+            });
+        }
+
+        function savePassword() {
+            const btn = document.getElementById('password-btn');
+            btn.textContent = 'Saving...';
+
+            fetch('/profile/change_password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    current: document.getElementById('current-password').value,
+                    newpass: document.getElementById('new-password').value,
+                    confirm: document.getElementById('confirm-password').value
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.textContent = data.success ? 'Saved' : 'Not Saved, try again';
+            });
+        }
+    </script>
+</body>
+</html>

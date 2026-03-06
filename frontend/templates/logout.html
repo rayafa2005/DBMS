@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logged Out</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Prevent caching -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            overflow-y: auto;
+        }
+        .top-strip {
+            background-color: black;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .top-strip img { height: 40px; }
+        .logout-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .logout-container img {
+            width: 180px;
+            height: auto;
+            margin: 20px 0;
+        }
+        .logout-container p {
+            font-size: 20px;
+            color: black;
+            margin: 10px 0;
+        }
+        .login-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            background-color: #479de3;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+
+   <script>
+    // Replace current history entry so user can't go back
+    window.history.replaceState(null, null, window.location.href);
+
+    // Prevent going back to protected pages
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener("popstate", function () {
+        window.location.replace("{{ url_for('home') }}");
+    });
+</script>
+
+</head>
+<body>
+    <div class="top-strip">
+        <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo">
+    </div>
+
+    <div class="logout-container">
+        <p>You're Logged out.</p>
+        <img src="{{ url_for('static', filename='logout.png') }}" alt="Logged out">
+        <p>Log in again?</p>
+        <button class="login-btn" onclick="location.href='{{ url_for('login_page') }}'">Log in</button>
+    </div>
+</body>
+</html>

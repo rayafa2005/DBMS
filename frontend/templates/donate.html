@@ -1,0 +1,154 @@
+<!-- templates/donate.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Donate Product</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/donate.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="top-strip">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo">
+        </div>
+    </div>
+    <div class="back-button" onclick="history.back()">←</div>
+
+    <div class="donate-title">Give with Purpose</div>
+
+    <div class="upload-section">
+        <div class="scroll-wrapper">
+            <div class="scroll-arrow left" onclick="scrollImages(-1)">&lt;</div>
+            <div class="image-container" id="imageContainer">
+                <label for="imageUpload" class="upload-box">
+                    <span class="plus-line">+</span>
+                </label>
+            </div>
+            <div class="scroll-arrow right" onclick="scrollImages(1)">&gt;</div>
+        </div>
+        <input type="file" id="imageUpload" accept="image/*" style="display:none">
+    </div>
+
+    <form id="donationForm" enctype="multipart/form-data">
+        <h2>Enter product details</h2>
+
+        <label>Name of Product:
+            <input type="text" name="name" maxlength="20" required>
+        </label>
+
+        <label>Original Price [per piece]: ₹
+            <input type="number" name="og_price" required>
+        </label>
+
+        <label>Description:
+            <textarea name="description" required></textarea>
+        </label>
+
+        <label>Category:
+            <select name="category" required>
+                {% for cat in categories %}
+                    <option value="{{ cat.category_id }}">{{ cat.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>Quantity:
+            <input type="number" name="quantity" required>
+        </label>
+
+        <label>Condition:
+            <select name="condition" required>
+                <option value="New">New</option>
+                <option value="Like New">Like New</option>
+                <option value="Used">Used</option>
+            </select>
+        </label>
+
+        <label class="terms">
+            <input type="checkbox" required>
+            I agree to <span class="blue-link" onclick="showTerms()">Terms and Conditions</span>
+        </label>
+
+        <div class="popup" id="termsPopup">
+            <div class="popup-content">
+                <strong>+Service Availability</strong>
+                <p>Product pickup and shipping services are currently available only within the territorial boundaries of India.</p>
+                <strong>+Donation Policy</strong>
+                <p>Donations made to the platform are entirely voluntary...</p>
+                <strong>+Pricing Policy</strong>
+                <p>All donated products are offered for resale at a fixed 50% discount.</p>
+                <button type="button" onclick="hideTerms(event)">Close</button>
+            </div>
+        </div>
+
+        <button type="submit" class="donate-button">DONATE</button>
+    </form>
+
+    <div id="thankYouSection" class="thank-you hidden">
+        <p class="thank-message">Thank you for your generosity — your donation truly makes a difference.<br>Kindness is never wasted; it always finds its way back.</p>
+        <img src="{{ url_for('static', filename='thank_you.png') }}" alt="Thank You">
+    </div>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const imageContainer = document.getElementById('imageContainer');
+        const uploadSection = document.querySelector('.upload-section');
+        let uploadedImageName = '';
+
+        imageUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                fetch('/donate/upload_image', { method: 'POST', body: formData })
+                    .then(response => response.json())
+                    .then(data => {
+                        uploadedImageName = data.filename;
+                        const img = document.createElement('img');
+                        img.src = `/static/product_images/${data.filename}`;
+                        img.classList.add('uploaded-image');
+                        imageContainer.appendChild(img);
+                    });
+            }
+        });
+
+        function scrollImages(direction) {
+            imageContainer.scrollBy({ left: direction * 200, behavior: 'smooth' });
+        }
+
+        function showTerms() {
+            document.getElementById('termsPopup').style.display = 'block';
+        }
+
+        function hideTerms(event) {
+            event.preventDefault();
+            document.getElementById('termsPopup').style.display = 'none';
+        }
+
+        document.getElementById('donationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!uploadedImageName) {
+                alert("Please upload an image before donating.");
+                return;
+            }
+
+            const formData = new FormData(this);
+            formData.append('image_name', uploadedImageName);
+
+            fetch('/donate/submit', { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('donationForm').style.display = 'none';
+                        document.getElementById('thankYouSection').classList.remove('hidden');
+                        uploadSection.style.display = 'none'; // Hide image preview after donation
+                    } else {
+                        alert("Error: " + (data.error || "Something went wrong."));
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

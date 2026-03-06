@@ -1,0 +1,183 @@
+<!-- templates/wishlist.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user_name }}'s Wishlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .empty-wishlist {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: gray;
+    text-align: center;
+    font-style: italic;
+}
+
+.empty-wishlist img {
+    width: 8cm;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        .top-strip {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            position: relative;
+        }
+        .logo img {
+            height: 40px;
+            object-fit: contain;
+        }
+        .back-button {
+            font-size: 24px;
+            margin: 15px;
+            cursor: pointer;
+        }
+
+        .wishlist-title {
+            font-family: "Times New Roman", serif;
+            font-weight: bold;
+            font-size: 24px;
+            color: black;
+            padding: 10px;
+        }
+        .product-grid {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+        .product-row {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            gap: 10px; /* Added gap between product boxes */
+        }
+        .product-box {
+            border: 1px solid lightgray;
+            padding: 5mm;
+            flex: 1 1 45%;
+            box-sizing: border-box;
+            max-width: 8cm;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+        }
+        .product-box img {
+            width: 6cm;
+            height: 8cm;
+            object-fit: cover;
+            display: block;
+        }
+        .product-box .info {
+            margin-top: 5px;
+            text-align: center;
+            width: 100%;
+        }
+        .product-box .info p {
+            margin: 2px 0;
+        }
+        .product-box .buttons {
+            display: flex;
+            flex-direction: column;
+            margin-top: 5px;
+            width: 100%;
+        }
+        .product-box button {
+            margin: 3px 0;
+            padding: 5px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .view-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-strip">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo1.jpeg') }}" alt="Logo">
+        </div>
+    </div>
+
+    <div class="back-button" onclick="history.back()">
+        ←
+    </div>
+
+    <!-- Wishlist Title -->
+    <div class="wishlist-title">{{ user_name }}'s Wishlist</div>
+
+    <!-- Empty Wishlist -->
+    <div id="empty-wishlist" class="empty-wishlist" style="display: {% if not wishlist_items %}flex{% else %}none{% endif %};">
+        <img src="{{ url_for('static', filename='empty_wishlist.png') }}" alt="Empty Wishlist">
+        <p>Wishlist is empty.</p>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="wishlist-container" class="product-grid" style="display: {% if wishlist_items %}flex{% else %}none{% endif %};">
+        {% for row in wishlist_items|batch(2, fill_with=None) %}
+        <div class="product-row">
+            {% for item in row if item %}
+            <div class="product-box" id="item-{{ item.id }}">
+                <img src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="{{ item.name }}">
+                <div class="info">
+                    <p>{{ item.name }}</p>
+                    <p>₹{{ item.price }}/-</p>
+                </div>
+                <div class="buttons">
+                    <button class="remove-btn" onclick="removeFromWishlist({{ item.id }})">Remove</button>
+                    <button class="view-btn" onclick="window.location.href='{{ url_for('view_prd.view_product', product_id=item.id) }}'">View Product</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function removeFromWishlist(productId) {
+            fetch(`/remove_wishlist/${productId}`, {
+                method: 'POST'
+            }).then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                    const item = document.getElementById('item-' + productId);
+                    item.remove();
+
+                    // If no items left, show empty image
+                    if (document.querySelectorAll('.product-box').length === 0) {
+                        document.getElementById('wishlist-container').style.display = 'none';
+                        document.getElementById('empty-wishlist').style.display = 'flex';
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
