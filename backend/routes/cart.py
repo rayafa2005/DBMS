@@ -1,18 +1,9 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request, jsonify
 from datetime import datetime, timedelta
 from flask import render_template
-import mysql.connector
+from db import get_db
 
 cart_bp = Blueprint('cart_bp', __name__, url_prefix='/cart')
-
-def get_db():
-    return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='Raziya#2005',
-        database='raziyadb',
-        use_pure=True
-    )
 
 @cart_bp.route('/')
 def cart():

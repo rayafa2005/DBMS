@@ -1,16 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request, jsonify
-import mysql.connector
+from db import get_db
 
 wishlist_bp = Blueprint('wishlist', __name__)
-
-def get_db():
-    return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='Raziya#2005',
-        database='raziyadb',
-        use_pure=True
-    )
 
 @wishlist_bp.route('/wishlist')
 def wishlist():

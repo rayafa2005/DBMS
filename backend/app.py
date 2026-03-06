@@ -1,3 +1,4 @@
+from db import get_db
 from flask import Flask, render_template, request, redirect, url_for, session
 from routes.index import index_bp
 from routes.profile import profile_bp
@@ -24,16 +25,6 @@ app.register_blueprint(orders_bp)
 app.register_blueprint(donate_bp)
 
 
-
-def get_db_connection():
-    return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='Raziya#2005',
-        database='raziyadb',
-        use_pure=True
-    )
-
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -44,7 +35,7 @@ def login_page():
         email = request.form['email']
         password = request.form['password']
         try:
-            connection = get_db_connection()
+            connection = get_db()
             cursor = connection.cursor(dictionary=True)
             query = "SELECT user_id, name, email, password_hash FROM users WHERE email = %s"
             cursor.execute(query, (email,))
@@ -82,7 +73,7 @@ def signin():
             return "<h3>Passwords do not match. <a href='/signin'>Try again</a>.</h3>"
 
         try:
-            connection = get_db_connection()
+            connection = get_db()
             cursor = connection.cursor()
 
            # ✅ Fix applied here

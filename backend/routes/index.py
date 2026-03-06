@@ -1,16 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request
-import mysql.connector
+from db import get_db
 
 index_bp = Blueprint('index', __name__, url_prefix='/index')
-
-def get_db_connection():
-    return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='Raziya#2005',
-        database='raziyadb',
-        use_pure=True
-    )
 
 @index_bp.route('/')
 def index():
@@ -19,7 +10,7 @@ def index():
         print("user is not logged in")
         return redirect(url_for('login_page'))
     print('user is logged in')
-    connection = get_db_connection()
+    connection = get_db()
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()
@@ -52,7 +43,7 @@ def filter_products():
         query += " AND p.conditions = %s"
         params.append(condition)
 
-    connection = get_db_connection()
+    connection = get_db()
     cursor = connection.cursor(dictionary=True)
     cursor.execute(query, params)
     products = cursor.fetchall()
@@ -63,7 +54,7 @@ def filter_products():
 
 @index_bp.route('/view_prd/<int:product_id>')
 def view_product(product_id):
-    connection = get_db_connection()
+    connection = get_db()
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT * FROM products WHERE id = %s", (product_id,))
     product = cursor.fetchone()

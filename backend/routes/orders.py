@@ -1,17 +1,10 @@
 from flask import Blueprint, render_template, session, redirect, url_for
 from datetime import datetime, timedelta
-import mysql.connector
+
+import mysql
+from db import get_db
 
 orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
-
-def get_db_connection():
-    return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='Raziya#2005',
-        database='raziyadb',
-        use_pure=True
-    )
 
 @orders_bp.route('/')
 def view_orders():
@@ -24,7 +17,7 @@ def view_orders():
     previous_orders = []
 
     try:
-        connection = get_db_connection()
+        connection = get_db()
         cursor = connection.cursor(dictionary=True)
 
         # Fetch current orders (not Delivered)

@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, jsonify, session
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
-import mysql.connector
+from db import get_db
 
 donate_bp = Blueprint('donate', __name__)
 
@@ -12,21 +12,12 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-def get_db_connection():
-    return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='Raziya#2005',
-        database='raziyadb',
-        use_pure=True
-    )
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @donate_bp.route('/donate', methods=['GET'])
 def donate_page():
-    connection = get_db_connection()
+    connection = get_db()
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT category_id, name FROM categories")
     categories = cursor.fetchall()
@@ -75,7 +66,7 @@ def submit_donation():
         else:
             return jsonify({"error": "Image file not found"}), 400
 
-        connection = get_db_connection()
+        connection = get_db()
         cursor = connection.cursor()
 
         insert_query = """

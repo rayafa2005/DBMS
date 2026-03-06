@@ -1,16 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for, make_response, jsonify
-import mysql.connector
+from db import get_db
 
 view_prd_bp = Blueprint('view_prd', __name__)
-
-def get_db():
-    return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='Raziya#2005',
-        database='raziyadb',
-        use_pure=True
-    )
 
 @view_prd_bp.route('/product/<int:product_id>', methods=['GET'])
 def view_product(product_id):
